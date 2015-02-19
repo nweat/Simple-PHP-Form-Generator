@@ -176,9 +176,10 @@ class Form {
 }
 
 
-
+/*
+*SAMPLE IMPLEMENTATION
+*/
 $_dropdownValues=array('White background','Black background','Green background');
-
 $sampleForm=new Form();
 echo $sampleForm->formStart('test');
 echo $sampleForm->startTag('fieldset');
@@ -211,7 +212,6 @@ echo $sampleForm->addInput('checkbox', 'Status[]', '', 'Apples','');
 echo $sampleForm->addInput('checkbox', 'Status[]', '', 'Oranges','');
 echo $sampleForm->endTag('p');
 
-
 echo $sampleForm->startTag('p');
 echo $sampleForm->addLabel('Comments: ');
 echo $sampleForm->addTextArea('comments');
@@ -220,14 +220,6 @@ echo $sampleForm->endTag('p');
 echo $sampleForm->addInput('submit', 'Submit','Submit','Register');
 echo $sampleForm->endTag('fieldset');
 echo $sampleForm->formEnd();
-
-
-echo $_GET['Gender'];
-
-foreach($_GET['Status'] as $test=>$value)
-{
-	echo $value;
-}
 
 ?>
 
