@@ -162,7 +162,6 @@ class Form {
    		
    	foreach($values as $val)
    	{
-   		echo $val;
    		if($selected==$val){
    			$_status='selected';
    		}else {
