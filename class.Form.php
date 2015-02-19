@@ -13,15 +13,20 @@ class Form {
    * Generate form start tag
    * @return string formstart tag
    */
-  public function formStart($name, $id, $method='POST', $action='')
+  public function formStart($name, $id, $method='POST', $action='', $attributes=array())
   {
   	$_formstrt = '';
+  	if ((!empty($name) && trim($name)!=''))
+  	{
   	$_formstrt = '<form';
   	$_formstrt .= ' name = '.trim($name);
   	$_formstrt .= ' id = '.trim($id);
   	$_formstrt .= ' method = '.trim($method);
   	$_formstrt .= ' action = '.trim($action);
+  	$_formstrt .= ' '.implode(' ', $attributes); //add any other additional attributes
   	$_formstrt .= '>';
+  	}else
+  		return 'Invalid Form';
   	return $_formstrt;
   }
    
@@ -40,9 +45,10 @@ class Form {
    * Generate specified start tag
    * @return string start tag
   */
-  public function startTag($t) {
+  public function startTag($t, $attributes=array()) {
   	$_tag= '';
    	$_tag = "<$t";
+   	$_tag .= ' '.implode(' ', $attributes); //add any other additional attributes
   	$_tag .= '>';
   	return $_tag;
   }
@@ -53,8 +59,8 @@ class Form {
   */
   public function endTag($t) {
   	$_tag= '';
-  	$_tag = "<$t";
-  	$_tag .= '/>';
+  	$_tag = "</$t";
+  	$_tag .= '>';
   	return $_tag;
   }
  
@@ -103,7 +109,7 @@ class Form {
   	else 
   		return 'Invalid Element';
  
-    $_element .= implode(' ', $attributes); //add any other additional html attributes, css styling or javascript functions for example
+    $_element .= ' '.implode(' ', $attributes); //add any other additional html attributes, css styling or javascript functions for example
     $_element .= ' />';
    
     return $_element;
@@ -151,19 +157,20 @@ class Form {
    	if(!empty($values) && (!empty($name) && trim($name)!=''))
    	{
    		$_element .= "<select name=\"$name\" id=\"$id\"";
-   		$_element .= implode(' ', $attributes); //add any other additional html attributes, css styling or javascript functions for example
+   		$_element .= ' '.implode(' ', $attributes); //add any other additional html attributes, css styling or javascript functions for example
    		$_element .= '>';
    		
    	foreach($values as $val)
    	{
+   		echo $val;
    		if($selected==$val){
    			$_status='selected';
    		}else {
    			$_status='';
    		}
-   		$_element .= '<option value=';
-   		$_element .= trim(strip_tags(htmlspecialchars($val))).' '.$_status.'>';
-   		$_element .= trim(strip_tags(htmlspecialchars($val)));
+   		$_element .= "<option value=\"$val\"";
+   		$_element .= $_status.' >';  //trim(strip_tags(htmlspecialchars($val)))
+   		$_element .= $val;
    		$_element .= '</option>';
    	}
    	}else 
@@ -176,15 +183,17 @@ class Form {
 }
 
 
-/*
-*SAMPLE IMPLEMENTATION
-*/
-$_dropdownValues=array('White background','Black background','Green background');
-$sampleForm=new Form();
-echo $sampleForm->formStart('test');
-echo $sampleForm->startTag('fieldset');
 
-echo $sampleForm->startTag('p');
+$_dropdownValues=array('White background','Blackbackground','Green background');
+
+$sampleForm=new Form();
+
+echo $sampleForm->formStart('sampleform');
+echo $sampleForm->startTag('fieldset');
+echo $sampleForm->startTag('legend').'REGISTRATION';
+echo $sampleForm->endTag('legend');
+
+echo $sampleForm->startTag('p',array('style="font-weight:bold"'));
 echo $sampleForm->addLabel('Email:');
 echo $sampleForm->addInput('email', 'Email', 'Email', '',array('required'));
 echo $sampleForm->endTag('p');
@@ -196,7 +205,7 @@ echo $sampleForm->endTag('p');
 
 echo $sampleForm->startTag('p');
 echo $sampleForm->addLabel('Preference:');
-echo $sampleForm->addDropdown('pref', 'pref', $_dropdownValues, '', array('onchange="msg();"'));
+echo $sampleForm->addDropdown('pref', 'pref', $_dropdownValues,'Green background');
 echo $sampleForm->endTag('p');
 
 
@@ -212,6 +221,7 @@ echo $sampleForm->addInput('checkbox', 'Status[]', '', 'Apples','');
 echo $sampleForm->addInput('checkbox', 'Status[]', '', 'Oranges','');
 echo $sampleForm->endTag('p');
 
+
 echo $sampleForm->startTag('p');
 echo $sampleForm->addLabel('Comments: ');
 echo $sampleForm->addTextArea('comments');
@@ -220,7 +230,4 @@ echo $sampleForm->endTag('p');
 echo $sampleForm->addInput('submit', 'Submit','Submit','Register');
 echo $sampleForm->endTag('fieldset');
 echo $sampleForm->formEnd();
-
 ?>
-
-
