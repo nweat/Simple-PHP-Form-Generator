@@ -162,13 +162,14 @@ class Form {
    		
    	foreach($values as $val)
    	{
+   		$val=trim(strip_tags(htmlspecialchars($val)));
    		if($selected==$val){
    			$_status='selected';
    		}else {
    			$_status='';
    		}
    		$_element .= "<option value=\"$val\"";
-   		$_element .= $_status.' >';  //trim(strip_tags(htmlspecialchars($val)))
+   		$_element .= $_status.' >';  
    		$_element .= $val;
    		$_element .= '</option>';
    	}
@@ -183,7 +184,7 @@ class Form {
 
 
 //=====================================================SAMPLE IMPLEMENTATION
-$_dropdownValues=array('White background','Blackbackground','Green background');
+$_dropdownValues=array('White background','Black background','Green background');
 
 $sampleForm=new Form();
 
