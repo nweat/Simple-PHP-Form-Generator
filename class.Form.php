@@ -7,7 +7,8 @@
  * 
  *  */
 
-class Form {
+class Form 
+{
  
   /**
    * Generate form start tag
@@ -16,18 +17,18 @@ class Form {
   public function formStart($name, $id, $method='POST', $action='', $attributes=array())
   {
   	$_formstrt = '';
-  	if ((!empty($name) && trim($name)!=''))
-  	{
-  	$_formstrt = '<form';
-  	$_formstrt .= ' name = '.trim($name);
-  	$_formstrt .= ' id = '.trim($id);
-  	$_formstrt .= ' method = '.trim($method);
-  	$_formstrt .= ' action = '.trim($action);
-  	$_formstrt .= ' '.implode(' ', $attributes); //add any other additional attributes
-  	$_formstrt .= '>';
-  	}else
-  		return 'Invalid Form';
-  	return $_formstrt;
+  	if ((!empty($name) && trim($name)!='')){
+  	    $_formstrt = '<form';
+  	    $_formstrt .= ' name = '.trim($name);
+  	    $_formstrt .= ' id = '.trim($id);
+  	    $_formstrt .= ' method = '.trim($method);
+  	    $_formstrt .= ' action = '.trim($action);
+  	    $_formstrt .= ' '.implode(' ', $attributes); //add any other additional attributes
+  	    $_formstrt .= '>';
+  	}else {
+  	    return 'Invalid Form';
+  	}
+  	    return $_formstrt;
   }
    
   /**
@@ -47,8 +48,8 @@ class Form {
   */
   public function startTag($t, $attributes=array()) {
   	$_tag= '';
-   	$_tag = "<$t";
-   	$_tag .= ' '.implode(' ', $attributes); //add any other additional attributes
+   $_tag = "<$t";
+   $_tag .= ' '.implode(' ', $attributes); //add any other additional attributes
   	$_tag .= '>';
   	return $_tag;
   }
@@ -95,19 +96,18 @@ class Form {
     //can modify below to specify valid input types
     //($type == 'hidden' || $type == 'password' || $type == 'text' || $type == 'radio' || $type == 'submit' || $type == 'checkbox')
     
-  	if ((!empty($name) && trim($name)!=''))
-  	{
-  		$name=trim(strip_tags(htmlspecialchars($name)));
+  	if ((!empty($name) && trim($name)!='')){
+  	    $name=trim(strip_tags(htmlspecialchars($name)));
   		$value=trim(strip_tags(htmlspecialchars($value)));
   		  		
-  				if($type == 'radio' || $type == 'checkbox') //specify a label for each radio or checkbox
-  		 		{ 
-  		 			$_element .="&nbsp<label for =".$value.">".$value."</label>";
-  		 		}
-  	$_element .= "<input type=\"$type\" name=\"$name\" id=\"$id\" value=\"$value\"";
+  	    if($type == 'radio' || $type == 'checkbox'){ //specify a label for each radio or checkbox
+  		  $_element .="&nbsp<label for =".$value.">".$value."</label>";
+  		}
+  	    $_element .= "<input type=\"$type\" name=\"$name\" id=\"$id\" value=\"$value\"";
   	}
-  	else 
+  	else {
   		return 'Invalid Element';
+  	}
  
     $_element .= ' '.implode(' ', $attributes); //add any other additional html attributes, css styling or javascript functions for example
     $_element .= ' />';
@@ -128,16 +128,16 @@ class Form {
    public function addTextArea($name='', $id=null, $value=null, $rows=5, $cols=20)
    {
    	$_element = '';
-   	if(!empty($name) && trim($name)!='')
-   	{
-   	$_element .= "<textarea name=\"$name\" id=\"$id\" rows=\"$rows\" cols=\"$cols\"";
-   	$_element .= '>';
-   	$_element .= trim(strip_tags(htmlspecialchars($value)));
-   	$_element .= '</textarea>';
-   	}else 
+   	if(!empty($name) && trim($name)!=''){
+   	    $_element .= "<textarea name=\"$name\" id=\"$id\" rows=\"$rows\" cols=\"$cols\"";
+   	    $_element .= '>';
+   	    $_element .= trim(strip_tags(htmlspecialchars($value)));
+   	    $_element .= '</textarea>';
+   	}else {
    		return 'Invalid Element';
+   	}
    	
-   	return $_element;
+     	return $_element;
    }  
    
    /**
@@ -154,15 +154,14 @@ class Form {
    	$_element = '';
     $_status = '';
     
-   	if(!empty($values) && (!empty($name) && trim($name)!=''))
-   	{
+   	if(!empty($values) && (!empty($name) && trim($name)!='')){
    		$_element .= "<select name=\"$name\" id=\"$id\"";
    		$_element .= ' '.implode(' ', $attributes); //add any other additional html attributes, css styling or javascript functions for example
    		$_element .= '>';
    		
-   	foreach($values as $val)
-   	{
+   	foreach($values as $val){
    		$val=trim(strip_tags(htmlspecialchars($val)));
+   		
    		if($selected==$val){
    			$_status='selected';
    		}else {
@@ -173,17 +172,18 @@ class Form {
    		$_element .= $val;
    		$_element .= '</option>';
    	}
-   	}else 
+   	}else {
    		return 'Invalid Element';
+   	}
 
-   	$_element .= '</select>';
-   	return $_element;
+   	    $_element .= '</select>';
+   	    return $_element;
    }
     
 }
 
 
-//=====================================================SAMPLE IMPLEMENTATION
+//==========================================SAMPLE IMPLEMENTATION (YOU SHOULD PLACE THE CODE BELOW IN ANOTHER FILE)
 $_dropdownValues=array('White background','Black background','Green background');
 
 $sampleForm=new Form();
@@ -205,7 +205,7 @@ echo $sampleForm->endTag('p');
 
 echo $sampleForm->startTag('p');
 echo $sampleForm->addLabel('Preference:');
-echo $sampleForm->addDropdown('pref', 'pref', $_dropdownValues,'Green background');
+echo $sampleForm->addDropdown('pref', 'pref', $_dropdownValues,'Black background');
 echo $sampleForm->endTag('p');
 
 
@@ -230,4 +230,3 @@ echo $sampleForm->endTag('p');
 echo $sampleForm->addInput('submit', 'Submit','Submit','Register');
 echo $sampleForm->endTag('fieldset');
 echo $sampleForm->formEnd();
-?>
