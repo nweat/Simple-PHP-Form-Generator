@@ -14,7 +14,7 @@ class Form
    * Generate form start tag
    * @return string formstart tag
    */
-  public function formStart($name, $id, $method='POST', $action='', $attributes=array())
+  public function formStart($name, $id='', $method='POST', $action='', $attributes=array())
   {
   	$_formstrt = '';
   	if ((!empty($name) && trim($name)!='')){
